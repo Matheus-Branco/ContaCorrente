@@ -4,7 +4,8 @@ public class Cliente
 {
 	public Cliente()
 	{
-    public string nomeCompleto;
+    public string nome;
+    public string sobrenome;
     public int numero;
     public decimal saldo;
     public bool status;
