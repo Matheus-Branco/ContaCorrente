@@ -1,7 +1,7 @@
 public class Movimentacao
     {
-        public double Valor { get; private set; }
-        public TipoMovimentacao Tipo { get; private set; }
+        public double Valor;
+        public TipoMovimentacao Tipo; 
 
         public Movimentacao(double valor, TipoMovimentacao tipo)
         {
