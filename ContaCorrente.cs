@@ -2,14 +2,14 @@ namespace ContaCorrente
 {
     public class ContaCorrente
     {
-        public int Numero { get; private set; }
-        public double Saldo { get; private set; }
-        public bool Especial { get; private set; }
-        public double Limite { get; private set; }
-        public List<Movimentacao> HistoricoMovimentacoes { get; private set; }
-        public string Nome { get; private set; }
-        public string Sobrenome { get; private set; }
-        public string CPF { get; private set; }
+        public int Numero;
+        public double Saldo;
+        public bool Especial;
+        public double Limite;
+        public List<Movimentacao> HistoricoMovimentacoes;
+        public string Nome;
+        public string Sobrenome;
+        public string CPF;
 
         public ContaCorrente(int numero, double saldoInicial, bool especial, double limite, string nome, string sobrenome, string cpf)
         {
