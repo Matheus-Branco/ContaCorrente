@@ -1,27 +1,72 @@
-﻿using System;
-
-public class ContaCorrente
+namespace ContaCorrente
 {
-    public cliente titular;
-    public movimentacao[] historico;
-    public decimal saldo;
+    public class ContaCorrente
+    {
+        public int Numero { get; private set; }
+        public double Saldo { get; private set; }
+        public bool Especial { get; private set; }
+        public double Limite { get; private set; }
+        public List<Movimentacao> HistoricoMovimentacoes { get; private set; }
+        public string Nome { get; private set; }
+        public string Sobrenome { get; private set; }
+        public string CPF { get; private set; }
 
-    Console.WriteLine("Bem vindo a conta");
+        public ContaCorrente(int numero, double saldoInicial, bool especial, double limite, string nome, string sobrenome, string cpf)
+        {
+            Numero = numero;
+            Saldo = saldoInicial;
+            Especial = especial;
+            Limite = limite;
+            HistoricoMovimentacoes = new List<Movimentacao>();
+            Nome = nome;
+            Sobrenome = sobrenome;
+            CPF = cpf;
+        }
 
-            string operacao = "";
+        public void Depositar(double valor)
+        {
+            Saldo += valor;
+            HistoricoMovimentacoes.Add(new Movimentacao(valor, TipoMovimentacao.Credito));
+        }
 
-            //1 para ver seu saldo, 2 para saquar, 3 para depositar
-            if (operacao == "1")
+        public bool Sacar(double valor)
+        {
+            if (Saldo + Limite >= valor)
             {
-                ViewSaldo();
+                Saldo -= valor;
+                HistoricoMovimentacoes.Add(new Movimentacao(valor, TipoMovimentacao.Debito));
+                return true;
             }
-            if (operacao == "2")
+            else
             {
-                Sacar();
+                Console.WriteLine("Saldo insuficiente para saque.");
+                return false;
             }
-            if (operacao == "3")
+        }
+
+        public double VisualizarSaldo()
+        {
+            return Saldo;
+        }
+
+        public void VisualizarExtrato()
+        {
+            Console.WriteLine($"Extrato da conta {Numero} - Cliente: {Nome} {Sobrenome}");
+            foreach (var movimentacao in HistoricoMovimentacoes)
             {
-                Depositar();
+                Console.WriteLine($"{movimentacao.Tipo}: {movimentacao.Valor}");
             }
-    
-}
+        }
+
+        public void Transferir(ContaCorrente destino, double valor)
+        {
+            if (this.Sacar(valor))
+            {
+                destino.Depositar(valor);
+            }
+            else
+            {
+                Console.WriteLine("Transferência não realizada devido a saldo insuficiente.");
+            }
+        }
+    }
